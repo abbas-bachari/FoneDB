@@ -16,3 +16,8 @@ docs/
 dist/
 proxies.txt
 testes/
+phones-1.db
+phones-bak.db
+devises.py
+.gitignore
+phones-temp.db

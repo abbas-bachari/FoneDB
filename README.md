@@ -39,21 +39,22 @@ pip install .
 
 ```python
 from fonedb import FoneDB,Storage,Device
-from dbflux import Sqlite
-import asyncio
+
 
 DB= Storage(base_db=Sqlite(db_name="phones.db"))
 
 async def scrape():
-    phone_db = FoneDB(r'Certificates/RapidSSL_TLS_RSA_CA_G1.crt',database=DB)
+    fone_db = FoneDB(r'Certificates/RapidSSL_TLS_RSA_CA_G1.crt',database=DB)
     brands=["Samsung","Xiaomi"]
     try:
         for brand in brands:
-            await phone_db.get_devices(brand)
+            await fone_db.scrape_devices(brand,from_date="2015-01-01",sleep_time=3,start_index=0)
     finally:
-        await phone_db.close()
+        await fone_db.close()
     
     print(f"✅ Total stored models: {DB.get_record_count()}")
+
+
 
 def loade_devices():
     total=DB.get_record_count()
@@ -69,9 +70,6 @@ def loade_devices():
     devices:list[Device]= DB.get()
     print("✅ First device:\n",  devices[0])
     
-   
-
-
 
 
 if __name__ == "__main__":
@@ -85,24 +83,37 @@ if __name__ == "__main__":
 ### Example Output:
 
 ```
-✅ Total stored models: 1082
-✅ Total stored Samsung models: 734
-✅ Total stored Xiaomi models: 348
+...
+...
+Load Xiaomi page 35 of 39
+Saved 15 devices ...
+Load Xiaomi page 36 of 39
+Saved 10 devices ...
+Load Xiaomi page 37 of 39
+Saved 10 devices ...
+Load Xiaomi page 38 of 39
+Saved 9 devices ...
+Load Xiaomi page 39 of 39
+Saved 2 devices ...
+✅ Total stored models: 1383
+✅ Total stored models: 1383
+✅ Total stored Samsung models: 976
+✅ Total stored Xiaomi models: 407
 ✅ First device:
-{
+ {
     "model": "SM-E066B/DS",
     "brand": "Samsung",
-    "name": "Samsung Galaxy F06 5G Standard Edition Global Dual Sim",
+    "name": "Samsung SM-E066B/DS Galaxy F06 5G 2025 Standard Edition Global Dual Sim TD-LTE 128GB",
     "os_system": "Android",
-    "os_version": 14,
+    "os_version": "14",
     "sdk_version": 34,
     "memory": "128GB",
     "regions": "GLOBAL",
-    "edition": "Standard Edition ",
+    "edition": "Standard Edition",
     "is_global": true,
     "dual_sim": true,
     "url": "https://phonedb.net/index.php?m=device&id=24739&c=samsung_sm-e066bds_galaxy_f06_5g_2025_standard_edition_global_dual_sim_td-lte_128gb__samsung_a066"
-}
+}}
 
 ```
 

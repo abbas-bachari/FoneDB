@@ -13,12 +13,12 @@ class Device(Base):
     brand       = Column(String)
     name        = Column(String)
     os_system   = Column(String)
-    os_version  = Column(Integer)
+    os_version  = Column(String)
     sdk_version = Column(Integer)
     memory      = Column(String)
     regions     = Column(String)
     edition     = Column(String)
-    is_global     = Column(Boolean)
+    is_global   = Column(Boolean)
     dual_sim    = Column(Boolean)
     url         = Column(String)
 
@@ -69,6 +69,7 @@ class Storage(DBModel):
                 with the name "phones.db".
         """
         super().__init__(Device,base_db)
+        self.create_tables(Base)
 
 
 
